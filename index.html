@@ -1,259 +1,985 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>GenSTEAMers | Project Scenario Review</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GenSTEAMers Teacher Hub | Project Scenario Review</title>
+  <style>
+    :root {
+      --bg: #f5f7fa;
+      --surface: #ffffff;
+      --surface-soft: #f8fafc;
+      --sidebar: #eef3f7;
+      --primary: #0f6c8d;
+      --primary-dark: #0a526c;
+      --accent: #2f855a;
+      --text: #213547;
+      --muted: #5f7285;
+      --border: #d8e2eb;
+      --shadow: 0 8px 24px rgba(15, 35, 55, 0.06);
+      --radius: 16px;
+      --max: 1380px;
+    }
 
-<style>
-:root {
-  --bg:#f6fbfc;
-  --card:#ffffff;
-  --primary:#167c80;
-  --text:#18323b;
-  --muted:#5d7680;
-  --border:#d8e8ea;
-}
+    * {
+      box-sizing: border-box;
+    }
 
-body {
-  margin:0;
-  font-family:Arial;
-  background:var(--bg);
-  color:var(--text);
-}
+    html {
+      scroll-behavior: smooth;
+    }
 
-.container {
-  width:90%;
-  max-width:1100px;
-  margin:auto;
-}
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.55;
+    }
 
-header {
-  background:white;
-  border-bottom:1px solid var(--border);
-  position:sticky;
-  top:0;
-}
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
 
-nav {
-  display:flex;
-  justify-content:space-between;
-  padding:15px 0;
-}
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      box-shadow: 0 2px 10px rgba(0,0,0,0.03);
+    }
 
-nav a {
-  margin-left:15px;
-  color:var(--muted);
-}
+    .topbar-inner {
+      width: min(var(--max), calc(100% - 28px));
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      padding: 14px 0;
+    }
 
-.hero {
-  padding:60px 0;
-}
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 700;
+      font-size: 1rem;
+    }
 
-.card {
-  background:var(--card);
-  padding:25px;
-  border-radius:16px;
-  border:1px solid var(--border);
-  margin-bottom:20px;
-}
+    .brand-badge {
+      width: 38px;
+      height: 38px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, var(--primary), #3b8fb3);
+      color: white;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+    }
 
-.projects {
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:18px;
-}
+    .topbar-meta {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      color: var(--muted);
+      font-size: 0.93rem;
+    }
 
-.project {
-  background:var(--card);
-  padding:20px;
-  border-radius:16px;
-  border:1px solid var(--border);
-  display:flex;
-  flex-direction:column;
-}
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 12px;
+      background: var(--surface-soft);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+    }
 
-.tag {
-  font-size:12px;
-  background:#eef7f8;
-  padding:6px 10px;
-  border-radius:20px;
-  width:fit-content;
-  margin-bottom:10px;
-}
+    .layout {
+      width: min(var(--max), calc(100% - 28px));
+      margin: 18px auto 30px;
+      display: grid;
+      grid-template-columns: 290px 1fr;
+      gap: 22px;
+      align-items: start;
+    }
 
-.btn {
-  margin-top:auto;
-  padding:12px;
-  background:var(--primary);
-  color:white;
-  text-align:center;
-  border-radius:10px;
-  margin-top:15px;
-}
+    .sidebar {
+      position: sticky;
+      top: 78px;
+      background: var(--sidebar);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 18px;
+      box-shadow: var(--shadow);
+    }
 
-section {
-  padding:40px 0;
-  scroll-margin-top:90px;
-}
+    .sidebar h3 {
+      margin: 0 0 14px;
+      font-size: 1rem;
+    }
 
-@media(max-width:900px){
-  .projects {grid-template-columns:1fr;}
-}
-</style>
+    .sidebar-group {
+      margin-bottom: 18px;
+    }
 
+    .sidebar-group-title {
+      font-size: 0.82rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--muted);
+      margin-bottom: 10px;
+      font-weight: 700;
+    }
+
+    .sidebar a {
+      display: block;
+      padding: 10px 12px;
+      border-radius: 10px;
+      color: var(--text);
+      font-size: 0.95rem;
+      margin-bottom: 6px;
+      background: transparent;
+      border: 1px solid transparent;
+    }
+
+    .sidebar a:hover {
+      background: white;
+      border-color: var(--border);
+    }
+
+    .sidebar small {
+      color: var(--muted);
+      display: block;
+      margin-top: 8px;
+      line-height: 1.45;
+    }
+
+    .content {
+      display: grid;
+      gap: 20px;
+    }
+
+    .panel {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      box-shadow: var(--shadow);
+      padding: 24px;
+      scroll-margin-top: 90px;
+    }
+
+    .hero {
+      background: linear-gradient(135deg, #eff7fb 0%, #fbfdff 100%);
+    }
+
+    .eyebrow {
+      display: inline-block;
+      padding: 7px 12px;
+      border-radius: 999px;
+      background: #e0f0f7;
+      color: var(--primary-dark);
+      font-size: 0.84rem;
+      font-weight: 700;
+      margin-bottom: 14px;
+    }
+
+    h1, h2, h3, h4 {
+      margin: 0 0 12px;
+      line-height: 1.2;
+    }
+
+    h1 {
+      font-size: clamp(2rem, 4vw, 2.9rem);
+      max-width: 900px;
+    }
+
+    h2 {
+      font-size: clamp(1.35rem, 2vw, 2rem);
+    }
+
+    h3 {
+      font-size: 1.08rem;
+    }
+
+    .lead {
+      color: var(--muted);
+      font-size: 1.06rem;
+      max-width: 920px;
+      margin: 0;
+    }
+
+    .actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 22px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 12px 16px;
+      border-radius: 12px;
+      font-weight: 700;
+      border: 1px solid transparent;
+      transition: 0.2s ease;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: var(--primary-dark);
+    }
+
+    .btn-secondary {
+      background: white;
+      color: var(--primary-dark);
+      border-color: var(--border);
+    }
+
+    .btn-secondary:hover {
+      border-color: var(--primary);
+    }
+
+    .overview-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+    }
+
+    .mini-card {
+      background: var(--surface-soft);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 16px;
+    }
+
+    .mini-card strong {
+      display: block;
+      margin-bottom: 6px;
+      font-size: 1rem;
+    }
+
+    .mini-card span {
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .criteria-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 14px;
+      margin-top: 14px;
+    }
+
+    .criteria-item {
+      background: var(--surface-soft);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 16px;
+      font-size: 0.95rem;
+      text-align: center;
+      font-weight: 700;
+      color: var(--primary-dark);
+    }
+
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 18px;
+    }
+
+    .project-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      box-shadow: var(--shadow);
+    }
+
+    .tag-row {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: #edf5f9;
+      color: var(--primary-dark);
+      font-size: 0.83rem;
+      font-weight: 700;
+      border: 1px solid #d8e8f0;
+      width: fit-content;
+    }
+
+    .project-card p {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    .project-meta {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      font-size: 0.92rem;
+      color: var(--muted);
+    }
+
+    .project-card .btn {
+      margin-top: auto;
+      width: fit-content;
+    }
+
+    .project-detail {
+      display: grid;
+      gap: 18px;
+    }
+
+    .two-col {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 18px;
+    }
+
+    .info-box {
+      background: var(--surface-soft);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 16px;
+    }
+
+    .list {
+      margin: 0;
+      padding-left: 18px;
+    }
+
+    .list li {
+      margin-bottom: 8px;
+    }
+
+    .journey {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 12px;
+    }
+
+    .journey-step {
+      background: var(--surface-soft);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 14px;
+      text-align: center;
+      font-weight: 700;
+      color: var(--primary-dark);
+      font-size: 0.92rem;
+    }
+
+    .muted {
+      color: var(--muted);
+    }
+
+    .back-link {
+      display: inline-block;
+      margin-top: 6px;
+      font-size: 0.94rem;
+      color: var(--primary-dark);
+      font-weight: 700;
+    }
+
+    .back-link:hover {
+      text-decoration: underline;
+    }
+
+    .coming-soon {
+      border-style: dashed;
+    }
+
+    @media (max-width: 1180px) {
+      .layout {
+        grid-template-columns: 1fr;
+      }
+
+      .sidebar {
+        position: static;
+      }
+
+      .overview-grid,
+      .criteria-grid,
+      .projects-grid,
+      .two-col,
+      .journey {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media (max-width: 760px) {
+      .overview-grid,
+      .criteria-grid,
+      .projects-grid,
+      .two-col,
+      .journey {
+        grid-template-columns: 1fr;
+      }
+
+      .topbar-inner {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+  </style>
 </head>
-
 <body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="brand">
+        <div class="brand-badge">G</div>
+        <div>
+          GenSTEAMers Teacher Hub<br>
+          <span style="font-weight:400;color:var(--muted);font-size:0.92rem;">Project Scenario Review Space</span>
+        </div>
+      </div>
+      <div class="topbar-meta">
+        <span class="pill">10 project scenarios</span>
+        <span class="pill">Teacher review</span>
+        <span class="pill">Select 4 projects</span>
+      </div>
+    </div>
+  </header>
 
-<header>
-<div class="container">
-<nav>
-<div><b>GenSTEAMers</b></div>
-<div>
-<a href="#projects">Projects</a>
-<a href="#evaluation">Evaluation</a>
-</div>
-</nav>
-</div>
-</header>
+  <div class="layout">
+    <aside class="sidebar">
+      <div class="sidebar-group">
+        <h3>Course navigation</h3>
+        <small>
+          Review the project scenarios, reflect on classroom fit, and complete the evaluation form.
+        </small>
+      </div>
 
-<!-- HERO -->
-<section class="hero">
-<div class="container">
-<div class="card">
-<h1>Review and select project scenarios</h1>
-<p>
-Explore 10 STEM projects enhanced with GenAI and select the four you would implement in your classroom.
-</p>
-</div>
-</div>
-</section>
+      <div class="sidebar-group">
+        <div class="sidebar-group-title">Overview</div>
+        <a href="#home">Welcome</a>
+        <a href="#instructions">How this review works</a>
+        <a href="#criteria">Evaluation criteria</a>
+        <a href="#projects">Project scenarios</a>
+      </div>
 
-<!-- PROJECTS -->
-<section id="projects">
-<div class="container">
-<h2>Project Scenarios</h2>
+      <div class="sidebar-group">
+        <div class="sidebar-group-title">Projects</div>
+        <a href="#project-1">1. Water Footprint</a>
+        <a href="#project-2">2. AI Energy Quest</a>
+        <a href="#project-3">3. Theme 3 Scenario</a>
+        <a href="#project-4">4. Waste Story</a>
+        <a href="#project-5">5. Theme 4 Scenario 3</a>
+        <a href="#project-6">6. Chatting with AI</a>
+        <a href="#project-7">7. Mapping the Time</a>
+        <a href="#project-8">8. Theme 7 Scenario</a>
+        <a href="#project-9">9. Theme 8 Scenario</a>
+        <a href="#project-10">10. Monopoly Project</a>
+      </div>
 
-<div class="projects">
+      <div class="sidebar-group">
+        <div class="sidebar-group-title">Final step</div>
+        <a href="#reflection">Reflection</a>
+        <a href="#evaluation">Evaluation form</a>
+      </div>
+    </aside>
 
-<!-- 1 -->
-<div class="project">
-<div class="tag">Theme 1</div>
-<h3>Water Footprint</h3>
-<p>Hidden water in everyday choices.</p>
-<a class="btn" href="#p1">Open</a>
-</div>
+    <main class="content">
+      <section id="home" class="panel hero">
+        <div class="eyebrow">Teacher Hub · Asynchronous review</div>
+        <h1>Review and select the project scenarios you would implement in your classroom</h1>
+        <p class="lead">
+          This space presents ten STEM project scenarios enhanced with GenAI. Your role is to review them, compare them, and select the four project scenarios that you would be most interested in implementing in your own educational context.
+        </p>
+        <div class="actions">
+          <a class="btn btn-primary" href="#projects">Explore project scenarios</a>
+          <a class="btn btn-secondary" href="#evaluation">Go to evaluation</a>
+        </div>
+      </section>
 
-<!-- 2 -->
-<div class="project">
-<div class="tag">Theme 2</div>
-<h3>AI Energy Quest</h3>
-<p>Energy systems and sustainability.</p>
-<a class="btn" href="#p2">Open</a>
-</div>
+      <section id="instructions" class="panel">
+        <h2>How this review works</h2>
+        <div class="overview-grid">
+          <div class="mini-card">
+            <strong>1. Explore</strong>
+            <span>Read each project card and open the full scenario overview.</span>
+          </div>
+          <div class="mini-card">
+            <strong>2. Compare</strong>
+            <span>Think about relevance, feasibility, student engagement, and GenAI use.</span>
+          </div>
+          <div class="mini-card">
+            <strong>3. Reflect</strong>
+            <span>Consider your own classroom, subject area, and teaching priorities.</span>
+          </div>
+          <div class="mini-card">
+            <strong>4. Select</strong>
+            <span>Complete the evaluation form and choose the four strongest options.</span>
+          </div>
+        </div>
+      </section>
 
-<!-- 3 -->
-<div class="project">
-<div class="tag">Theme 3</div>
-<h3>Coming soon</h3>
-<p>Details will be added.</p>
-<a class="btn" href="#p3">Open</a>
-</div>
+      <section id="criteria" class="panel">
+        <h2>Suggested evaluation criteria</h2>
+        <p class="muted">
+          Keep these dimensions in mind as you review the scenarios.
+        </p>
+        <div class="criteria-grid">
+          <div class="criteria-item">Curriculum relevance</div>
+          <div class="criteria-item">Classroom feasibility</div>
+          <div class="criteria-item">Student engagement</div>
+          <div class="criteria-item">Meaningful GenAI use</div>
+          <div class="criteria-item">Implementation interest</div>
+        </div>
+      </section>
 
-<!-- 4 -->
-<div class="project">
-<div class="tag">Theme 4</div>
-<h3>Waste Story</h3>
-<p>Waste data and behavior.</p>
-<a class="btn" href="#p4">Open</a>
-</div>
+      <section id="projects" class="panel">
+        <h2>Project scenarios</h2>
+        <p class="muted">
+          Open a project to review the core idea, indicative tools, timeline, and implementation direction.
+        </p>
 
-<!-- 5 -->
-<div class="project">
-<div class="tag">Theme 4</div>
-<h3>Coming soon</h3>
-<p>Details will be added.</p>
-<a class="btn" href="#p5">Open</a>
-</div>
+        <div class="projects-grid">
+          <article class="project-card">
+            <div class="tag-row">
+              <span class="tag">Theme 1</span>
+              <span class="tag">Scenario 1</span>
+            </div>
+            <h3>Our Water Footprint: uncovering hidden water in everyday choices</h3>
+            <p>Students explore the concept of the water footprint by uncovering the hidden water behind everyday choices such as food, clothing, and products.</p>
+            <div class="project-meta">
+              <span>4–5 weeks</span>
+              <span>ChatGPT</span>
+              <span>Gemini</span>
+              <span>Canva</span>
+            </div>
+            <a class="btn btn-secondary" href="#project-1">Open project</a>
+          </article>
 
-<!-- 6 -->
-<div class="project">
-<div class="tag">Theme 5</div>
-<h3>Chatting with AI</h3>
-<p>Build a chatbot.</p>
-<a class="btn" href="#p6">Open</a>
-</div>
+          <article class="project-card">
+            <div class="tag-row">
+              <span class="tag">Theme 2</span>
+              <span class="tag">Scenario 2</span>
+            </div>
+            <h3>The AI Energy Quest: in search of the Energy Shift</h3>
+            <p>Students become energy researchers and designers, exploring energy transformation and debating sustainable solutions for school or community contexts.</p>
+            <div class="project-meta">
+              <span>5–6 weeks</span>
+              <span>Gemini</span>
+              <span>ChatGPT</span>
+              <span>Canva</span>
+            </div>
+            <a class="btn btn-secondary" href="#project-2">Open project</a>
+          </article>
 
-<!-- 7 -->
-<div class="project">
-<div class="tag">Theme 6</div>
-<h3>Mapping Time</h3>
-<p>Data journeys and mapping.</p>
-<a class="btn" href="#p7">Open</a>
-</div>
+          <article class="project-card coming-soon">
+            <div class="tag-row">
+              <span class="tag">Theme 3</span>
+              <span class="tag">Scenario 2</span>
+            </div>
+            <h3>Theme 3 Scenario 2</h3>
+            <p>Project title and full description will be added soon.</p>
+            <div class="project-meta">
+              <span>Details pending</span>
+            </div>
+            <a class="btn btn-secondary" href="#project-3">Open project</a>
+          </article>
 
-<!-- 8 -->
-<div class="project">
-<div class="tag">Theme 7</div>
-<h3>Coming soon</h3>
-<p>Details will be added.</p>
-<a class="btn" href="#p8">Open</a>
-</div>
+          <article class="project-card">
+            <div class="tag-row">
+              <span class="tag">Theme 4</span>
+              <span class="tag">Scenario 1</span>
+            </div>
+            <h3>Our Waste Story: uncovering patterns and driving change through data</h3>
+            <p>Students examine how waste is generated in their daily environment and use data to identify patterns, build narratives, and propose action.</p>
+            <div class="project-meta">
+              <span>4–5 weeks</span>
+              <span>ChatGPT</span>
+              <span>Gemini</span>
+              <span>Canva</span>
+            </div>
+            <a class="btn btn-secondary" href="#project-4">Open project</a>
+          </article>
 
-<!-- 9 -->
-<div class="project">
-<div class="tag">Theme 8</div>
-<h3>Coming soon</h3>
-<p>Details will be added.</p>
-<a class="btn" href="#p9">Open</a>
-</div>
+          <article class="project-card coming-soon">
+            <div class="tag-row">
+              <span class="tag">Theme 4</span>
+              <span class="tag">Scenario 3</span>
+            </div>
+            <h3>Theme 4 Scenario 3</h3>
+            <p>Project title and full description will be added soon.</p>
+            <div class="project-meta">
+              <span>Details pending</span>
+            </div>
+            <a class="btn btn-secondary" href="#project-5">Open project</a>
+          </article>
 
-<!-- 10 -->
-<div class="project">
-<div class="tag">Theme 9</div>
-<h3>Monopoly Project</h3>
-<p>Game logic and modelling.</p>
-<a class="btn" href="#p10">Open</a>
-</div>
+          <article class="project-card">
+            <div class="tag-row">
+              <span class="tag">Theme 5</span>
+              <span class="tag">Scenario 2</span>
+            </div>
+            <h3>Chatting with AI: Uncovering the mechanisms behind chatbots</h3>
+            <p>Students investigate how AI chatbots work by testing existing bots, then building and refining simple chatbot behaviour using coding tools.</p>
+            <div class="project-meta">
+              <span>4–6 weeks</span>
+              <span>SchoolHub.ai</span>
+              <span>Gemini</span>
+              <span>Scratch</span>
+            </div>
+            <a class="btn btn-secondary" href="#project-6">Open project</a>
+          </article>
 
-</div>
-</div>
-</section>
+          <article class="project-card">
+            <div class="tag-row">
+              <span class="tag">Theme 6</span>
+              <span class="tag">Scenario 2</span>
+            </div>
+            <h3>Mapping the Time: Daily Journeys in Data</h3>
+            <p>Students analyse a daily activity such as the journey to school, calculate and visualise data, and transform it into an artistic AI-supported map.</p>
+            <div class="project-meta">
+              <span>4–5 weeks</span>
+              <span>Gemini</span>
+              <span>ChatGPT</span>
+              <span>Canva</span>
+            </div>
+            <a class="btn btn-secondary" href="#project-7">Open project</a>
+          </article>
 
-<!-- DETAILS (example structure repeat) -->
-<section id="p1"><div class="container"><div class="card">
-<h2>Water Footprint</h2>
-<p>Students explore hidden water consumption and sustainability decisions.</p>
-<p><b>Time:</b> 4–5 weeks</p>
-<p><b>Tools:</b> ChatGPT, Gemini, Canva</p>
-</div></div></section>
+          <article class="project-card coming-soon">
+            <div class="tag-row">
+              <span class="tag">Theme 7</span>
+              <span class="tag">Scenario 1</span>
+            </div>
+            <h3>Theme 7 Scenario 1</h3>
+            <p>Project title and full description will be added soon.</p>
+            <div class="project-meta">
+              <span>Details pending</span>
+            </div>
+            <a class="btn btn-secondary" href="#project-8">Open project</a>
+          </article>
 
-<section id="p2"><div class="container"><div class="card">
-<h2>AI Energy Quest</h2>
-<p>Students design energy solutions using AI.</p>
-<p><b>Time:</b> 5–6 weeks</p>
-</div></div></section>
+          <article class="project-card coming-soon">
+            <div class="tag-row">
+              <span class="tag">Theme 8</span>
+              <span class="tag">Scenario 2</span>
+            </div>
+            <h3>Theme 8 Scenario 2</h3>
+            <p>Project title and full description will be added soon.</p>
+            <div class="project-meta">
+              <span>Details pending</span>
+            </div>
+            <a class="btn btn-secondary" href="#project-9">Open project</a>
+          </article>
 
-<section id="p3"><div class="container"><div class="card"><h2>Coming soon</h2></div></div></section>
-<section id="p4"><div class="container"><div class="card"><h2>Waste Story</h2></div></div></section>
-<section id="p5"><div class="container"><div class="card"><h2>Coming soon</h2></div></div></section>
-<section id="p6"><div class="container"><div class="card"><h2>Chatting with AI</h2></div></div></section>
-<section id="p7"><div class="container"><div class="card"><h2>Mapping Time</h2></div></div></section>
-<section id="p8"><div class="container"><div class="card"><h2>Coming soon</h2></div></div></section>
-<section id="p9"><div class="container"><div class="card"><h2>Coming soon</h2></div></div></section>
-<section id="p10"><div class="container"><div class="card"><h2>Monopoly Project</h2></div></div></section>
+          <article class="project-card">
+            <div class="tag-row">
+              <span class="tag">Theme 9</span>
+              <span class="tag">Scenario 3</span>
+            </div>
+            <h3>Monopoly - Decoding game logic and changing the rules</h3>
+            <p>Students analyse Monopoly property pricing to uncover the mathematical logic of the game, then redesign rules and cards to test system balance.</p>
+            <div class="project-meta">
+              <span>3–4 weeks</span>
+              <span>Gemini</span>
+              <span>ChatGPT</span>
+            </div>
+            <a class="btn btn-secondary" href="#project-10">Open project</a>
+          </article>
+        </div>
+      </section>
 
-<!-- EVALUATION -->
-<section id="evaluation">
-<div class="container">
-<div class="card">
-<h2>Evaluation</h2>
-<p>Select the 4 projects you would implement.</p>
-<a class="btn" href="https://forms.google.com" target="_blank">Start Evaluation</a>
-</div>
-</div>
-</section>
+      <section id="project-1" class="panel">
+        <div class="project-detail">
+          <div>
+            <div class="tag-row">
+              <span class="tag">Theme 1</span>
+              <span class="tag">Scenario 1</span>
+            </div>
+            <h2>Our Water Footprint: uncovering hidden water in everyday choices</h2>
+            <p class="muted">
+              Students explore the concept of the water footprint by uncovering the hidden water behind everyday choices such as food, clothing, and products.
+            </p>
+          </div>
 
+          <div class="two-col">
+            <div class="info-box">
+              <h3>Brief description</h3>
+              <p>
+                Through analysing real-world data and building their own simplified models, students identify patterns, question assumptions, and reflect on how consumption connects to resource use. Using GenAI as a thinking partner, they generate questions, interpret data, and explore alternative scenarios, leading to more informed and evidence-based decisions about sustainability.
+              </p>
+            </div>
+            <div class="info-box">
+              <h3>Indicative tools</h3>
+              <ul class="list">
+                <li>ChatGPT</li>
+                <li>Gemini</li>
+                <li>Canva</li>
+                <li>Claude</li>
+              </ul>
+              <p><strong>Estimated time:</strong> 4–5 weeks (approximately 2 hours per week)</p>
+            </div>
+          </div>
+
+          <div class="info-box">
+            <h3>Suggested learning flow</h3>
+            <div class="journey">
+              <div class="journey-step">1. Discover hidden water</div>
+              <div class="journey-step">2. Analyse examples</div>
+              <div class="journey-step">3. Build a simple model</div>
+              <div class="journey-step">4. Interpret patterns</div>
+              <div class="journey-step">5. Propose action</div>
+            </div>
+          </div>
+
+          <a class="back-link" href="#projects">← Back to project scenarios</a>
+        </div>
+      </section>
+
+      <section id="project-2" class="panel">
+        <div class="project-detail">
+          <div>
+            <div class="tag-row">
+              <span class="tag">Theme 2</span>
+              <span class="tag">Scenario 2</span>
+            </div>
+            <h2>The AI Energy Quest: in search of the Energy Shift</h2>
+            <p class="muted">
+              Students explore the science of energy transformation and move from research and debate to design and prototyping.
+            </p>
+          </div>
+
+          <div class="two-col">
+            <div class="info-box">
+              <h3>Brief description</h3>
+              <p>
+                Students begin by researching energy origins using GenAI tools and move toward debating sustainable solutions for their school or local community. They then use AI as a thinking partner and technical consultant to design and create a physical or digital functional prototype, such as a wind turbine or a solar-powered circuit.
+              </p>
+            </div>
+            <div class="info-box">
+              <h3>Indicative tools</h3>
+              <ul class="list">
+                <li>Gemini</li>
+                <li>ChatGPT</li>
+                <li>Canva</li>
+              </ul>
+              <p><strong>Estimated time:</strong> 5–6 weeks</p>
+            </div>
+          </div>
+
+          <a class="back-link" href="#projects">← Back to project scenarios</a>
+        </div>
+      </section>
+
+      <section id="project-3" class="panel coming-soon">
+        <h2>Theme 3 · Scenario 2</h2>
+        <p class="muted">Project title, description, tools, and timeline will be added soon.</p>
+        <a class="back-link" href="#projects">← Back to project scenarios</a>
+      </section>
+
+      <section id="project-4" class="panel">
+        <div class="project-detail">
+          <div>
+            <div class="tag-row">
+              <span class="tag">Theme 4</span>
+              <span class="tag">Scenario 1</span>
+            </div>
+            <h2>Our Waste Story: uncovering patterns and driving change through data</h2>
+            <p class="muted">
+              Students explore how waste is generated in their daily environment and how it reflects habits and behaviours.
+            </p>
+          </div>
+
+          <div class="two-col">
+            <div class="info-box">
+              <h3>Brief description</h3>
+              <p>
+                Through collecting and analysing data, students identify patterns, construct data-based narratives, and propose realistic actions for waste reduction. Using GenAI as a thinking partner, they interpret data, explore alternative solutions, and communicate evidence-based conclusions.
+              </p>
+            </div>
+            <div class="info-box">
+              <h3>Indicative tools</h3>
+              <ul class="list">
+                <li>ChatGPT</li>
+                <li>Gemini</li>
+                <li>Canva</li>
+                <li>Claude</li>
+              </ul>
+              <p><strong>Estimated time:</strong> 4–5 weeks (approximately 2 hours per week)</p>
+            </div>
+          </div>
+
+          <a class="back-link" href="#projects">← Back to project scenarios</a>
+        </div>
+      </section>
+
+      <section id="project-5" class="panel coming-soon">
+        <h2>Theme 4 · Scenario 3</h2>
+        <p class="muted">Project title, description, tools, and timeline will be added soon.</p>
+        <a class="back-link" href="#projects">← Back to project scenarios</a>
+      </section>
+
+      <section id="project-6" class="panel">
+        <div class="project-detail">
+          <div>
+            <div class="tag-row">
+              <span class="tag">Theme 5</span>
+              <span class="tag">Scenario 2</span>
+            </div>
+            <h2>Chatting with AI: Uncovering the mechanisms behind chatbots</h2>
+            <p class="muted">
+              Students investigate how AI really works by building and testing their own chatbot systems.
+            </p>
+          </div>
+
+          <div class="two-col">
+            <div class="info-box">
+              <h3>Brief description</h3>
+              <p>
+                Students first explore existing chatbots to understand their strengths and weaknesses. Then, using simple blocks of code, they teach a computer to recognise information and respond to questions. By building and testing their own bots, they reflect on helpfulness, bias, and usability.
+              </p>
+            </div>
+            <div class="info-box">
+              <h3>Indicative tools</h3>
+              <ul class="list">
+                <li>schoolhub.ai</li>
+                <li>Gemini</li>
+                <li>Scratch</li>
+                <li>Teachable Machine</li>
+              </ul>
+              <p><strong>Estimated time:</strong> 4–6 weeks</p>
+            </div>
+          </div>
+
+          <a class="back-link" href="#projects">← Back to project scenarios</a>
+        </div>
+      </section>
+
+      <section id="project-7" class="panel">
+        <div class="project-detail">
+          <div>
+            <div class="tag-row">
+              <span class="tag">Theme 6</span>
+              <span class="tag">Scenario 2</span>
+            </div>
+            <h2>Mapping the Time: Daily Journeys in Data</h2>
+            <p class="muted">
+              Students collect and map data from daily activity patterns such as their journey to school.
+            </p>
+          </div>
+
+          <div class="two-col">
+            <div class="info-box">
+              <h3>Brief description</h3>
+              <p>
+                Students begin by collecting and manually calculating their own data, such as time, distance, and transport. They then use GenAI as a data mapping tool to visualise findings, spot trends, and cross-check results for accuracy. Finally, they transform their structured geographic data into a creative artistic map of their city.
+              </p>
+            </div>
+            <div class="info-box">
+              <h3>Indicative tools</h3>
+              <ul class="list">
+                <li>Gemini</li>
+                <li>ChatGPT</li>
+                <li>Canva</li>
+                <li>DALL·E</li>
+              </ul>
+              <p><strong>Estimated time:</strong> 4–5 weeks</p>
+            </div>
+          </div>
+
+          <a class="back-link" href="#projects">← Back to project scenarios</a>
+        </div>
+      </section>
+
+      <section id="project-8" class="panel coming-soon">
+        <h2>Theme 7 · Scenario 1</h2>
+        <p class="muted">Project title, description, tools, and timeline will be added soon.</p>
+        <a class="back-link" href="#projects">← Back to project scenarios</a>
+      </section>
+
+      <section id="project-9" class="panel coming-soon">
+        <h2>Theme 8 · Scenario 2</h2>
+        <p class="muted">Project title, description, tools, and timeline will be added soon.</p>
+        <a class="back-link" href="#projects">← Back to project scenarios</a>
+      </section>
+
+      <section id="project-10" class="panel">
+        <div class="project-detail">
+          <div>
+            <div class="tag-row">
+              <span class="tag">Theme 9</span>
+              <span class="tag">Scenario 3</span>
+            </div>
+            <h2>Monopoly - Decoding game logic and changing the rules</h2>
+            <p class="muted">
+              Students analyse the pricing logic of Monopoly and redesign the game through mathematical modelling.
+            </p>
+          </div>
+
+          <div class="two-col">
+            <div class="info-box">
+              <h3>Brief description</h3>
+              <p>
+                Students analyse the pricing of Monopoly properties to discover the mathematical formulas that drive the game. After using GenAI to model property growth and checking its accuracy, they become game co-designers and create new rules and event cards to test how small mathematical changes affect balance and collapse.
+              </p>
+            </div>
+            <div class="info-box">
+              <h3>Indicative tools</h3>
+              <ul class="list">
+                <li>Gemini</li>
+                <li>ChatGPT</li>
+              </ul>
+              <p><strong>Estimated time:</strong> 3–4 weeks</p>
+            </div>
+          </div>
+
+          <a class="back-link" href="#projects">← Back to project scenarios</a>
+        </div>
+      </section>
+
+      <section id="reflection" class="panel">
+        <h2>Reflection before evaluation</h2>
+        <ul class="list">
+          <li>Which projects would engage your students most strongly?</li>
+          <li>Which ones connect most naturally to your subject area or teaching interests?</li>
+          <li>Which scenarios feel most realistic and feasible in your own classroom context?</li>
+          <li>Which projects make the most meaningful use of GenAI?</li>
+          <li>Which four would you prioritise for implementation?</li>
+        </ul>
+      </section>
+
+      <section id="evaluation" class="panel hero">
+        <div class="eyebrow">Final step</div>
+        <h2>Ready to complete the evaluation?</h2>
+        <p class="lead">
+          You have now reviewed the project scenarios. You can proceed to the evaluation form and select the four projects you would be most interested in implementing.
+        </p>
+        <div class="actions">
+          <a class="btn btn-primary" href="https://forms.google.com" target="_blank" rel="noopener noreferrer">Start evaluation</a>
+          <a class="btn btn-secondary" href="#projects">Review projects again</a>
+        </div>
+        <p class="muted" style="margin-top:16px;">
+          Replace the form link above with your actual Google Form URL.
+        </p>
+      </section>
+    </main>
+  </div>
 </body>
 </html>
