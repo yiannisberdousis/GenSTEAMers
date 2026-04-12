@@ -1,497 +1,293 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>GenSTEAMers | Project Scenario Review and Selection</title>
-  <style>
-    :root {
-      --bg: #f6fbfc;
-      --surface: #ffffff;
-      --surface-soft: #eef7f8;
-      --text: #18323b;
-      --muted: #5d7680;
-      --primary: #167c80;
-      --primary-dark: #0f5e61;
-      --accent: #5ba84f;
-      --border: #d8e8ea;
-      --shadow: 0 10px 30px rgba(10, 54, 62, 0.08);
-      --radius: 18px;
-      --max: 1180px;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GenSTEAMers | Project Review</title>
 
-    * { box-sizing: border-box; }
+<style>
+body {
+  margin:0;
+  font-family: Arial;
+  background:#f6fbfc;
+}
 
-    html { scroll-behavior: smooth; }
+.container {
+  width:90%;
+  max-width:1100px;
+  margin:auto;
+}
 
-    body {
-      margin: 0;
-      font-family: Arial, Helvetica, sans-serif;
-      color: var(--text);
-      background: var(--bg);
-      line-height: 1.6;
-    }
+h1,h2,h3 { margin:0 0 10px; }
 
-    a {
-      color: inherit;
-      text-decoration: none;
-    }
+.topbar {
+  position:sticky;
+  top:0;
+  background:white;
+  padding:10px;
+  border-bottom:1px solid #ddd;
+}
 
-    .container {
-      width: min(var(--max), calc(100% - 32px));
-      margin: 0 auto;
-    }
+nav a {
+  margin-right:15px;
+}
 
-    .topbar {
-      position: sticky;
-      top: 0;
-      z-index: 50;
-      backdrop-filter: blur(10px);
-      background: rgba(246, 251, 252, 0.94);
-      border-bottom: 1px solid var(--border);
-    }
+.hero {
+  padding:60px 0;
+}
 
-    .topbar-inner {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 20px;
-      padding: 14px 0;
-    }
+.card {
+  background:white;
+  padding:20px;
+  border-radius:12px;
+  margin-bottom:20px;
+}
 
-    .brand {
-      font-weight: 700;
-      letter-spacing: 0.2px;
-      white-space: nowrap;
-    }
+.projects {
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:15px;
+}
 
-    .brand span {
-      color: var(--primary);
-    }
+.project-card {
+  background:white;
+  padding:20px;
+  border-radius:12px;
+}
 
-    nav {
-      display: flex;
-      gap: 18px;
-      flex-wrap: wrap;
-    }
+.btn {
+  display:inline-block;
+  margin-top:10px;
+  padding:10px 14px;
+  background:#167c80;
+  color:white;
+  border-radius:8px;
+}
 
-    nav a {
-      color: var(--muted);
-      font-size: 0.96rem;
-    }
+section { padding:40px 0; }
 
-    nav a:hover {
-      color: var(--primary-dark);
-    }
+@media(max-width:800px){
+  .projects { grid-template-columns:1fr; }
+}
+</style>
 
-    .hero {
-      padding: 72px 0 42px;
-    }
-
-    .hero-card {
-      background: linear-gradient(135deg, #eaf7f8 0%, #f8fdfd 100%);
-      border: 1px solid var(--border);
-      box-shadow: var(--shadow);
-      border-radius: 28px;
-      padding: 44px;
-    }
-
-    .eyebrow {
-      display: inline-block;
-      padding: 8px 12px;
-      border-radius: 999px;
-      background: #dff0f1;
-      color: var(--primary-dark);
-      font-size: 0.86rem;
-      font-weight: 700;
-      margin-bottom: 18px;
-    }
-
-    h1, h2, h3 {
-      margin: 0 0 14px;
-      line-height: 1.2;
-    }
-
-    h1 {
-      font-size: clamp(2rem, 4vw, 3.2rem);
-      max-width: 860px;
-    }
-
-    h2 {
-      font-size: clamp(1.5rem, 2.8vw, 2.2rem);
-    }
-
-    h3 {
-      font-size: 1.15rem;
-    }
-
-    p.lead {
-      font-size: 1.08rem;
-      color: var(--muted);
-      max-width: 820px;
-      margin: 0 0 26px;
-    }
-
-    section {
-      padding: 34px 0;
-    }
-
-    .section-head {
-      margin-bottom: 18px;
-    }
-
-    .section-head p {
-      margin: 0;
-      color: var(--muted);
-      max-width: 860px;
-    }
-
-    .actions {
-      display: flex;
-      gap: 14px;
-      flex-wrap: wrap;
-      margin-top: 24px;
-    }
-
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      border-radius: 12px;
-      padding: 14px 18px;
-      font-weight: 700;
-      border: 1px solid transparent;
-      transition: 0.2s ease;
-      cursor: pointer;
-    }
-
-    .btn-primary {
-      background: var(--primary);
-      color: white;
-    }
-
-    .btn-primary:hover {
-      background: var(--primary-dark);
-    }
-
-    .btn-secondary {
-      background: white;
-      color: var(--primary-dark);
-      border-color: var(--border);
-    }
-
-    .btn-secondary:hover {
-      border-color: var(--primary);
-    }
-
-    .steps {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 18px;
-    }
-
-    .card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      padding: 22px;
-    }
-
-    .step-num {
-      width: 38px;
-      height: 38px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 50%;
-      background: #e6f5f5;
-      color: var(--primary-dark);
-      font-weight: 700;
-      margin-bottom: 12px;
-    }
-
-    .projects-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 18px;
-    }
-
-    .project-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 20px;
-      box-shadow: var(--shadow);
-      padding: 22px;
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
-
-    .project-meta {
-      font-size: 0.92rem;
-      color: var(--muted);
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-
-    .tag {
-      display: inline-flex;
-      align-items: center;
-      padding: 6px 10px;
-      border-radius: 999px;
-      background: var(--surface-soft);
-      color: var(--primary-dark);
-      font-size: 0.85rem;
-      font-weight: 700;
-      width: fit-content;
-    }
-
-    .project-card .btn {
-      margin-top: auto;
-      width: fit-content;
-    }
-
-    .project-page {
-      margin-top: 18px;
-      display: grid;
-      gap: 18px;
-    }
-
-    .two-col {
-      display: grid;
-      grid-template-columns: 1.2fr 0.8fr;
-      gap: 18px;
-    }
-
-    .list {
-      margin: 0;
-      padding-left: 18px;
-    }
-
-    .list li {
-      margin-bottom: 8px;
-    }
-
-    .journey {
-      display: grid;
-      grid-template-columns: repeat(5, 1fr);
-      gap: 14px;
-    }
-
-    .journey .mini {
-      background: #f9fcfc;
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 16px;
-      text-align: center;
-      font-size: 0.95rem;
-      font-weight: 700;
-      color: var(--primary-dark);
-    }
-
-    .criteria-grid {
-      display: grid;
-      grid-template-columns: repeat(5, 1fr);
-      gap: 14px;
-    }
-
-    .criteria-item {
-      background: #f9fcfc;
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 16px;
-      font-size: 0.95rem;
-      font-weight: 700;
-      color: var(--primary-dark);
-      text-align: center;
-    }
-
-    .reflection {
-      background: linear-gradient(135deg, #f4fbf4 0%, #fbfefb 100%);
-    }
-
-    .footer-box {
-      background: linear-gradient(135deg, #edf7f8 0%, #f7fbfc 100%);
-    }
-
-    .divider {
-      height: 1px;
-      background: var(--border);
-      margin: 10px 0 0;
-    }
-
-    .note {
-      font-size: 0.92rem;
-      color: var(--muted);
-    }
-
-    .anchor-offset {
-      scroll-margin-top: 90px;
-    }
-
-    .small {
-      font-size: 0.92rem;
-      color: var(--muted);
-    }
-
-    @media (max-width: 980px) {
-      .steps,
-      .projects-grid,
-      .journey,
-      .two-col,
-      .criteria-grid {
-        grid-template-columns: 1fr 1fr;
-      }
-    }
-
-    @media (max-width: 640px) {
-      .hero-card {
-        padding: 28px;
-      }
-
-      .steps,
-      .projects-grid,
-      .journey,
-      .two-col,
-      .criteria-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .topbar-inner {
-        align-items: flex-start;
-        flex-direction: column;
-      }
-    }
-  </style>
 </head>
+
 <body>
-  <header class="topbar">
-    <div class="container topbar-inner">
-      <div class="brand">Gen<span>STEAMers</span> · Project Review</div>
-      <nav>
-        <a href="#home">Home</a>
-        <a href="#projects">Projects</a>
-        <a href="#reflection">Reflection</a>
-        <a href="#evaluation">Evaluation</a>
-      </nav>
-    </div>
-  </header>
 
-  <main>
-    <section id="home" class="hero anchor-offset">
-      <div class="container">
-        <div class="hero-card">
-          <div class="eyebrow">Asynchronous teacher review</div>
-          <h1>Review and select the STEM project scenarios you would implement</h1>
-          <p class="lead">
-            You will explore ten STEM project scenarios enhanced with GenAI. Your role is to review them and select the ones that best fit your classroom context, your students’ needs, and your teaching interests. There are no right answers. We are interested in your professional judgement.
-          </p>
-          <div class="actions">
-            <a class="btn btn-primary" href="#projects">Explore projects</a>
-            <a class="btn btn-secondary" href="#evaluation">Go to evaluation</a>
-          </div>
-        </div>
-      </div>
-    </section>
+<header class="topbar">
+<div class="container">
+<nav>
+<a href="#home">Home</a>
+<a href="#projects">Projects</a>
+<a href="#evaluation">Evaluation</a>
+</nav>
+</div>
+</header>
 
-    <section>
-      <div class="container">
-        <div class="section-head">
-          <h2>What you will do</h2>
-          <p>Follow a simple process to review the project scenarios and submit your choices.</p>
-        </div>
-        <div class="steps">
-          <div class="card">
-            <div class="step-num">1</div>
-            <h3>Explore</h3>
-            <p>Open the project cards and review the core idea, learning flow, and student output.</p>
-          </div>
-          <div class="card">
-            <div class="step-num">2</div>
-            <h3>Reflect</h3>
-            <p>Think about your students, subject area, classroom realities, and local context.</p>
-          </div>
-          <div class="card">
-            <div class="step-num">3</div>
-            <h3>Evaluate</h3>
-            <p>Complete the evaluation form and select the four project scenarios you would be most interested in implementing.</p>
-          </div>
-          <div class="card">
-            <div class="step-num">4</div>
-            <h3>Shape the APK</h3>
-            <p>Your choices will help shape the final set of projects developed for implementation.</p>
-          </div>
-        </div>
-      </div>
-    </section>
+<main>
 
-    <section id="projects" class="anchor-offset">
-      <div class="container">
-        <div class="section-head">
-          <h2>Explore the 10 project scenarios</h2>
-          <p>Open a project to review its main idea, expected student work, indicative AI tools, and timeline. You can return here at any point to compare the scenarios.</p>
-        </div>
+<!-- HERO -->
+<section id="home" class="hero">
+<div class="container">
+<div class="card">
+<h1>Review the 10 Project Scenarios</h1>
+<p>Select the four projects you would implement in your classroom.</p>
+</div>
+</div>
+</section>
 
-        <div class="projects-grid">
-          <article class="project-card">
-            <span class="tag">Theme 1 · Scenario 1</span>
-            <h3>Our Water Footprint: uncovering hidden water in everyday choices</h3>
-            <p>Students explore the hidden water behind everyday products and reflect on sustainability through data, modelling, and informed decision-making.</p>
-            <div class="project-meta">
-              <span>Theme 1</span>
-              <span>4–5 weeks</span>
-            </div>
-            <a class="btn btn-secondary" href="#project-1">Open project</a>
-          </article>
+<!-- PROJECT CARDS -->
+<section id="projects">
+<div class="container">
+<h2>Projects</h2>
 
-          <article class="project-card">
-            <span class="tag">Theme 2 · Scenario 2</span>
-            <h3>The AI Energy Quest: in search of the Energy Shift</h3>
-            <p>Students investigate energy transformation, debate sustainable solutions, and design a functional prototype with AI as a thinking partner.</p>
-            <div class="project-meta">
-              <span>Theme 2</span>
-              <span>5–6 weeks</span>
-            </div>
-            <a class="btn btn-secondary" href="#project-2">Open project</a>
-          </article>
+<div class="projects">
 
-          <article class="project-card">
-            <span class="tag">Theme 3 · Scenario 2</span>
-            <h3>Theme 3 Project Scenario</h3>
-            <p>Project details will be added here. This card is already part of the review set and can be updated when the final scenario title and summary are confirmed.</p>
-            <div class="project-meta">
-              <span>Theme 3</span>
-              <span>To be confirmed</span>
-            </div>
-            <a class="btn btn-secondary" href="#project-3">Open project</a>
-          </article>
+<div class="project-card">
+<h3>Water Footprint</h3>
+<p>Hidden water in everyday life</p>
+<a class="btn" href="#project-1">Open</a>
+</div>
 
-          <article class="project-card">
-            <span class="tag">Theme 4 · Scenario 1</span>
-            <h3>Our Waste Story: uncovering patterns and driving change through data</h3>
-            <p>Students investigate how waste is generated, analyse patterns, and construct data-based narratives that lead to realistic actions.</p>
-            <div class="project-meta">
-              <span>Theme 4</span>
-              <span>4–5 weeks</span>
-            </div>
-            <a class="btn btn-secondary" href="#project-4">Open project</a>
-          </article>
+<div class="project-card">
+<h3>AI Energy Quest</h3>
+<p>Energy & sustainability</p>
+<a class="btn" href="#project-2">Open</a>
+</div>
 
-          <article class="project-card">
-            <span class="tag">Theme 4 · Scenario 3</span>
-            <h3>Theme 4 Project Scenario 3</h3>
-            <p>This second Theme 4 option can be completed later with its final title, summary, tools, and timeline.</p>
-            <div class="project-meta">
-              <span>Theme 4</span>
-              <span>To be confirmed</span>
-            </div>
-            <a class="btn btn-secondary" href="#project-5">Open project</a>
-          </article>
+<div class="project-card">
+<h3>Theme 3 Project</h3>
+<p>Coming soon</p>
+<a class="btn" href="#project-3">Open</a>
+</div>
 
-          <article class="project-card">
-            <span class="tag">Theme 5 · Scenario 2</span>
-            <h3>Chating with AI: Uncovering the mechanisms behind chat bots</h3>
-            <p>Students explore existing chatbots, identify strengths and errors, and build their own simple bots to understand how AI systems work.</p>
+<div class="project-card">
+<h3>Waste Story</h3>
+<p>Data & consumption</p>
+<a class="btn" href="#project-4">Open</a>
+</div>
+
+<div class="project-card">
+<h3>Theme 4 Scenario 3</h3>
+<p>Coming soon</p>
+<a class="btn" href="#project-5">Open</a>
+</div>
+
+<div class="project-card">
+<h3>Chatting with AI</h3>
+<p>Build a chatbot</p>
+<a class="btn" href="#project-6">Open</a>
+</div>
+
+<div class="project-card">
+<h3>Mapping Time</h3>
+<p>Data & journeys</p>
+<a class="btn" href="#project-7">Open</a>
+</div>
+
+<div class="project-card">
+<h3>Theme 7</h3>
+<p>Coming soon</p>
+<a class="btn" href="#project-8">Open</a>
+</div>
+
+<div class="project-card">
+<h3>Theme 8</h3>
+<p>Coming soon</p>
+<a class="btn" href="#project-9">Open</a>
+</div>
+
+<div class="project-card">
+<h3>Monopoly</h3>
+<p>Game modelling</p>
+<a class="btn" href="#project-10">Open</a>
+</div>
+
+</div>
+</div>
+</section>
+
+<!-- PROJECT DETAILS -->
+
+<section id="project-1">
+<div class="container">
+<div class="card">
+<h2>Our Water Footprint</h2>
+<p>Students explore hidden water in products and build models.</p>
+<p><b>Tools:</b> ChatGPT, Gemini, Canva</p>
+<p><b>Time:</b> 4–5 weeks</p>
+</div>
+</div>
+</section>
+
+<section id="project-2">
+<div class="container">
+<div class="card">
+<h2>AI Energy Quest</h2>
+<p>Students explore energy systems and design solutions.</p>
+<p><b>Tools:</b> Gemini, ChatGPT</p>
+<p><b>Time:</b> 5–6 weeks</p>
+</div>
+</div>
+</section>
+
+<section id="project-3">
+<div class="container">
+<div class="card">
+<h2>Theme 3</h2>
+<p>Details coming soon</p>
+</div>
+</div>
+</section>
+
+<section id="project-4">
+<div class="container">
+<div class="card">
+<h2>Our Waste Story</h2>
+<p>Students analyze waste data and propose actions.</p>
+<p><b>Tools:</b> ChatGPT, Gemini</p>
+<p><b>Time:</b> 4–5 weeks</p>
+</div>
+</div>
+</section>
+
+<section id="project-5">
+<div class="container">
+<div class="card">
+<h2>Theme 4 Scenario 3</h2>
+<p>Details coming soon</p>
+</div>
+</div>
+</section>
+
+<section id="project-6">
+<div class="container">
+<div class="card">
+<h2>Chatting with AI</h2>
+<p>Students build their own chatbot.</p>
+<p><b>Tools:</b> Scratch, Gemini</p>
+<p><b>Time:</b> 4–6 weeks</p>
+</div>
+</div>
+</section>
+
+<section id="project-7">
+<div class="container">
+<div class="card">
+<h2>Mapping the Time</h2>
+<p>Students map daily journeys using data.</p>
+<p><b>Tools:</b> ChatGPT, DALL·E</p>
+<p><b>Time:</b> 4–5 weeks</p>
+</div>
+</div>
+</section>
+
+<section id="project-8">
+<div class="container">
+<div class="card">
+<h2>Theme 7</h2>
+<p>Details coming soon</p>
+</div>
+</div>
+</section>
+
+<section id="project-9">
+<div class="container">
+<div class="card">
+<h2>Theme 8</h2>
+<p>Details coming soon</p>
+</div>
+</div>
+</section>
+
+<section id="project-10">
+<div class="container">
+<div class="card">
+<h2>Monopoly Project</h2>
+<p>Students analyze and redesign game rules.</p>
+<p><b>Tools:</b> ChatGPT</p>
+<p><b>Time:</b> 3–4 weeks</p>
+</div>
+</div>
+</section>
+
+<!-- EVALUATION -->
+<section id="evaluation">
+<div class="container">
+<div class="card">
+<h2>Evaluation</h2>
+<p>Select the 4 projects you would implement.</p>
+
+<a class="btn" href="https://forms.google.com" target="_blank">
+Start Evaluation
+</a>
+
+</div>
+</div>
+</section>
+
+</main>
+
+</body>
+</html>
