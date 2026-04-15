@@ -333,3 +333,13 @@ h3 { font-size: 1.08rem; }
   border-radius: 6px;
   margin-bottom: 12px;
 }
+
+
+.image-container img {
+  width: 100%;
+  max-width: 600px;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+  border-radius: 10px;
+}
