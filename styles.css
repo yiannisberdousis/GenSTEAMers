@@ -322,3 +322,14 @@ h3 { font-size: 1.08rem; }
   }
   .topbar-inner { flex-direction: column; align-items: flex-start; }
 }
+
+.evaluation-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: #2c3e50;
+  background: #f0f7f4;
+  padding: 8px 12px;
+  border-left: 4px solid #4CAF50;
+  border-radius: 6px;
+  margin-bottom: 12px;
+}
